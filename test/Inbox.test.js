@@ -27,10 +27,9 @@ describe('Inbox', () => {
         assert.equal(message, "HelloWorld");
     });
 
-    it('update new message', async () => {
-        await inbox.methods.setMessage("Bye").send({
-            from : accounts[0]
-        });
+    it('Update new message', async () => {
+        await inbox.methods.setMessage("Bye")
+                           .send({from : accounts[0]});
         const message = await inbox.methods.message().call();
         assert.equal(message, "Bye");
     });
