@@ -1,0 +1,22 @@
+{
+  "name": "lottery-contract",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "deploy": "node deploy.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ganache-cli": "^6.12.2",
+    "mocha": "^10.0.0",
+    "solc": "^0.4.17",
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^1.0.0-beta.26"
+  }
+}
