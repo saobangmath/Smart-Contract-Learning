@@ -65,4 +65,48 @@ describe('Lottery Contract', () => {
             assert.equal(accounts[i], players[i]);
         }
     });
+
+    /**
+     * only manager can pick the winner - modifier test;
+     */
+    it('Manager can pick the winner', async () => { 
+        const no = 3;
+        const money = web3.utils.toWei('0.02', 'ether');
+        for (let i = 0; i < no; i++){
+            await lottery.methods.enter()
+                                 .send({from: accounts[i], value : money});
+        } 
+        // manager can picked the winner
+        await lottery.methods.pickWinner()
+                             .send({from: accounts[0]});
+        
+        const players = await lottery.methods.getPlayers()
+                               .call({from: accounts[0]});
+        
+        assert.equal(0, players.length);
+    });
+
+    it('Normal player can not pick the winner', async () => { 
+        let err = null;
+        try{
+            const no = 3;
+            const money = web3.utils.toWei('0.02', 'ether');
+            for (let i = 0; i < no; i++){
+                await lottery.methods.enter()
+                                    .send({from: accounts[i], value : money});
+            } 
+            // manager can picked the winner
+            await lottery.methods.pickWinner()
+                                .send({from: accounts[1]});
+            
+            const players = await lottery.methods.getPlayers()
+                                .call({from: accounts[0]});
+            
+            assert.equal(0, players.length);
+        }
+        catch (catchedErr){
+            err = catchedErr;
+        }
+        assert.notEqual(err, null);
+    });
 }); 
